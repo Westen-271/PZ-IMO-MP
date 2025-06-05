@@ -23,3 +23,15 @@ option IMO.YearSettings.AllVitalsNearLifePak =
     type = boolean, default = true,
     page = IMO_YearSettings, translation = IMO_YearSettings_AllVitalsNearLifePak,
 }
+
+option IMO.IncapacitationSettings.IncapacitationHealthThreshold =
+{
+    type = integer, min = 1, default = 35, max = 99,
+    page = IMO_IncapacitationSettings, translation = IMO_IncapacitationSettings_HealthThreshold, 
+}
+
+option IMO.EquipmentSettings.TourniquetTypeComparison =
+{
+    type = boolean, default = false,
+    page = IMO_EquipmentSettings, translation = IMO_EquipmentSettings_TourniquetTypeComparison,
+}

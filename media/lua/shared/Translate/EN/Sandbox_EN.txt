@@ -1,5 +1,5 @@
 Sandbox_EN = {
-    Sandbox_IMO_YearSettings = "Immersive Medical Overhaul - Year Equipment Settings",
+    Sandbox_IMO_YearSettings = "Immersive Medical Overhaul - Year-Based Equipment",
 
     Sandbox_IMO_YearSettings_firstGenHemostatics = "Enable first-generation hemostatics",
     Sandbox_IMO_YearSettings_firstGenHemostatics_tooltip = "Early hemostatic clotting agents from the late 1990s or early 2000s. Some hemostatics such as QuikClot caused burns due to the ingredients used, and were generally less effective than their modern-day counterparts.",
@@ -12,4 +12,11 @@ Sandbox_EN = {
 
     Sandbox_IMO_YearSettings_VitalsNearLifePak = "Vitals taken near LifePak do not need extra equipment",
     Sandbox_IMO_YearSettings_VitalsNearLifePak_tooltip = "When disabled, medics will need a pulse oximeter and blood pressure cuff separately from the LifePak to read vitals. When enabled, these items will not need to be present to check these vital signs.",
+
+    Sandbox_IMO_EquipmentSettings_TourniquetTypeComparison = "All tourniquet types have the same stats",
+    Sandbox_IMO_EquipmentSettings_TourniquetTypeComparison_tooltip = "When disabled, improvised tourniquets will have a chance to break on release and will not be effective as commercial tourniquets. When enabled, all tourniquets will act as the commercial ones."
+
+    Sandbox_IMO_IncapacitationSettings = "Immersive Medical Overhaul - Incapacitation",
+    Sandbox_IMO_IncapacitationSettings_HealthThreshold = "Incapacitation Health Threshold",
+    Sandbox_IMO_IncapacitationSettings_HealthThreshold_tooltip = "The overall health % that, when equal to or below, the player will be forced into the incapacitated state.",
 }
