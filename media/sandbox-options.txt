@@ -1,0 +1,25 @@
+VERSION = 1,
+
+option IMO.YearSettings.firstGenHemostatics =
+{
+    type = boolean, default = true,
+    page = IMO_YearSettings, translation = IMO_YearSettings_firstGenHemostatics,
+}
+
+option IMO.YearSettings.LifePakNoDefib =
+{
+    type = boolean, default = true,
+    page = IMO_YearSettings, translation = IMO_YearSettings_LifePakNoDefib,
+}
+
+option IMO.YearSettings.LifePakWithDefib =
+{
+    type = boolean, default = true,
+    page = IMO_YearSettings, translation = IMO_YearSettings_LifePakWithDefib,
+}
+
+option IMO.YearSettings.AllVitalsNearLifePak =
+{
+    type = boolean, default = true,
+    page = IMO_YearSettings, translation = IMO_YearSettings_AllVitalsNearLifePak,
+}

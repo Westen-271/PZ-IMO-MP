@@ -1,0 +1,15 @@
+Sandbox_EN = {
+    Sandbox_IMO_YearSettings = "Immersive Medical Overhaul - Year Equipment Settings",
+
+    Sandbox_IMO_YearSettings_firstGenHemostatics = "Enable first-generation hemostatics",
+    Sandbox_IMO_YearSettings_firstGenHemostatics_tooltip = "Early hemostatic clotting agents from the late 1990s or early 2000s. Some hemostatics such as QuikClot caused burns due to the ingredients used, and were generally less effective than their modern-day counterparts.",
+
+    Sandbox_IMO_YearSettings_LifePakNoDefib = "Enable the LifePak 11 (no defib)",
+    Sandbox_IMO_YearSettings_LifePakNoDefib_tooltip = "The LifePak 11, released in 1994, was the standard for pre-hospital care with a 12-lead ECG. It did not have a defib capability.",
+
+    Sandbox_IMO_YearSettings_LifePakWithDefib = "Enable the LifePak 12 (with defib)",
+    Sandbox_IMO_YearSettings_LifePakWithDefib_tooltip = "The LifePak 12 was released in 1997 and was the successor to the Lifepak 11, integrating an AED. Another version in '98 was released with better monitoring capability. For the purposes of this mod, the 1997 and 1998 version are the same.",
+
+    Sandbox_IMO_YearSettings_VitalsNearLifePak = "Vitals taken near LifePak do not need extra equipment",
+    Sandbox_IMO_YearSettings_VitalsNearLifePak_tooltip = "When disabled, medics will need a pulse oximeter and blood pressure cuff separately from the LifePak to read vitals. When enabled, these items will not need to be present to check these vital signs.",
+}
