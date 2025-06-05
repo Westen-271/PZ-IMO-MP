@@ -1,12 +1,5 @@
 VitalsManager = {};
 
-local VitalsManager.DEFAULT_VITAL_SIGNS =
-{
-    heartRate = 80,
-    bloodPressure = { sys = 120, dia = 80 },
-    respirationRate = 14,
-};
-
 local VitalsManager.BLOOD_TYPES =
 {
     { type = "O+", chance = 37.4, canReceiveFrom = {"O+", "O-"} },
@@ -62,7 +55,7 @@ function VitalsManager.AllocateCharacterBloodType(player)
         allocatedBloodType = VitalsManager.DEFAULT_BLOOD_TYPE;
     end
 
-    player:getModData().IMO_Vitals.BloodType = allocatedBloodType;
+    player:getModData().IMO_Vitals.bloodType = allocatedBloodType;
 end
 
 function VitalsManager.OnCreatePlayer(playerNum, player)
@@ -75,6 +68,9 @@ function VitalsManager.OnCreatePlayer(playerNum, player)
     if not modData.IMO_Vitals then
         modData.IMO_Vitals = {};
         VitalsManager.AllocateCharacterBloodType(player);
+        print(string.format("[VitalsManager] %s has been allocated blood type %s", player:getUsername(), modData.IMO_Vitals.bloodType.type));
+    
+
     end
 end
 

@@ -52,7 +52,10 @@ end
 ### Conditionals
 **Checking variable exists** - use just the variable name, e.g. ```if account then``` or ```if not account then```
 
+### Strings
+**Formatting strings** - format strings using `string.format` rather than appending with `..`, e.g. ```print(string.format("Player %s has connected.", player:getUsername()));```
+
 
 ### Comments
-**Use space after --** - spaces should be used after -- to make the text more readable, e.g. ```-- Example comment.```
+**Use space after --** - spaces should be used after `--` to make the text more readable, e.g. ```-- Example comment.```
 
