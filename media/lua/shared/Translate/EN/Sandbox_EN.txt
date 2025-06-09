@@ -1,8 +1,8 @@
 Sandbox_EN = {
     Sandbox_IMO_YearSettings = "Immersive Medical Overhaul - Year-Based Equipment",
 
-    Sandbox_IMO_YearSettings_firstGenHemostatics = "Enable first-generation hemostatics",
-    Sandbox_IMO_YearSettings_firstGenHemostatics_tooltip = "Early hemostatic clotting agents from the late 1990s or early 2000s. Some hemostatics such as QuikClot caused burns due to the ingredients used, and were generally less effective than their modern-day counterparts.",
+    Sandbox_IMO_YearSettings_FirstGenHemostatics = "Enable first-generation hemostatics",
+    Sandbox_IMO_YearSettings_FirstGenHemostatics_tooltip = "Early hemostatic clotting agents from the late 1990s or early 2000s. Some hemostatics such as QuikClot caused burns due to the ingredients used, and were generally less effective than their modern-day counterparts.",
 
     Sandbox_IMO_YearSettings_LifePakNoDefib = "Enable the LifePak 11 (no defib)",
     Sandbox_IMO_YearSettings_LifePakNoDefib_tooltip = "The LifePak 11, released in 1994, was the standard for pre-hospital care with a 12-lead ECG. It did not have a defib capability.",

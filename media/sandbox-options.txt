@@ -1,36 +1,36 @@
 VERSION = 1,
 
-option IMO.YearSettings.firstGenHemostatics =
+option IMO.YearSettings_FirstGenHemostatics
 {
     type = boolean, default = true,
-    page = IMO_YearSettings, translation = IMO_YearSettings_firstGenHemostatics,
+    page = IMO_YearSettings, translation = IMO_YearSettings_FirstGenHemostatics,
 }
 
-option IMO.YearSettings.LifePakNoDefib =
+option IMO.YearSettings_LifePakNoDefib
 {
     type = boolean, default = true,
     page = IMO_YearSettings, translation = IMO_YearSettings_LifePakNoDefib,
 }
 
-option IMO.YearSettings.LifePakWithDefib =
+option IMO.YearSettings_LifePakWithDefib
 {
     type = boolean, default = true,
     page = IMO_YearSettings, translation = IMO_YearSettings_LifePakWithDefib,
 }
 
-option IMO.YearSettings.AllVitalsNearLifePak =
+option IMO.YearSettings_AllVitalsNearLifePak
 {
     type = boolean, default = true,
     page = IMO_YearSettings, translation = IMO_YearSettings_AllVitalsNearLifePak,
 }
 
-option IMO.IncapacitationSettings.IncapacitationHealthThreshold =
+option IMO.IncapacitationSettings_IncapacitationHealthThreshold
 {
     type = integer, min = 1, default = 35, max = 99,
     page = IMO_IncapacitationSettings, translation = IMO_IncapacitationSettings_HealthThreshold, 
 }
 
-option IMO.EquipmentSettings.TourniquetTypeComparison =
+option IMO.EquipmentSettings_TourniquetTypeComparison
 {
     type = boolean, default = false,
     page = IMO_EquipmentSettings, translation = IMO_EquipmentSettings_TourniquetTypeComparison,
