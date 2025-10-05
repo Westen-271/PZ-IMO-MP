@@ -19,6 +19,9 @@ function EveryOneMinute()
         return 
     end
 
+    vitalData:update();
+    vitalData:save();
+
     local bloodVolumeAsPercentage = math.ceil((vitalData.bloodVolume / vitalData.maxBloodVolume) * 100);
 
     local sandboxVars = SandboxVars;
@@ -48,8 +51,7 @@ function OnPlayerUpdate(player)
         vitalData:setFromBaseline();
     end
 
-    vitalData:update();
-    vitalData:save();
+    -- Work towards the new 
 end
 
 Events.OnPlayerUpdate.Add(OnPlayerUpdate);

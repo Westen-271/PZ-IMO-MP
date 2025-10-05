@@ -28,6 +28,10 @@ VitalSigns = ISBaseObject:derive("IMOVitalSigns");
 --[[
     Generates the baseline vital signs for the character, using "optimal" vital signs.
     The optimal vitals are then offset by a random amount in order to simulate the differences between people.
+    isOffsetNegative is the chance that the baseline vitals are lower than the optimal, and vice versa.
+
+    Optimal HR = 80
+    Optimal BP = 120/80
 --]]
 function VitalSigns:generateBaselineVitals()
     local baselineVitals = 
@@ -96,9 +100,9 @@ function VitalSigns:allocateCharacterBloodType()
     local allocatedBloodType = {};
 
     -- Calculate total value of all blood type chances.
-    for i, bloodType in ipairs(BLOOD_TYPES) do
-        if BLOOD_TYPES[i].chance then
-            weight = weight + BLOOD_TYPES[i].chance;
+    for _, bloodType in ipairs(BLOOD_TYPES) do
+        if bloodType and bloodType.chance then
+            weight = weight + bloodType.chance;
         end
     end
 
@@ -106,11 +110,13 @@ function VitalSigns:allocateCharacterBloodType()
     local randomNum = ZombRand(weight);
 
     local iteratedWeight = 0;
-    for i, bloodType in ipairs(BLOOD_TYPES) do
-        iteratedWeight = iteratedWeight + bloodType.chance;
+    for _, bloodType in ipairs(BLOOD_TYPES) do
+        if bloodType then
+            iteratedWeight = iteratedWeight + bloodType.chance;
 
-        if randomNum < iteratedWeight then
-           allocatedBloodType = bloodType;
+            if randomNum < iteratedWeight then
+                allocatedBloodType = bloodType;
+            end
         end
     end
 
@@ -141,49 +147,134 @@ function VitalSigns:setFromBaseline()
     if not tempVitals then return end;
 
     self.vitals = tempVitals;
+    self.desiredVitals = tempVitals;
 
     print("Vitals have been set from baseline.");
-    for k, v in pairs(self.vitals) do
-        print("Key: " .. tostring(k));
-        
-        if type(self.vitals[k]) == "table" then
-            for i, j in pairs(self.vitals[k]) do
-                print("     Key: " .. tostring(i));
-                print("     " .. tostring(self.vitals[k][i]));
+    self:save();
+end
+
+--[[
+    Helper functions for quick calculations that do not need to be repeated.
+--]]
+
+function VitalSigns:getCurrentBloodVolumePercentage()
+    if not self.bloodVolume or not self.maxBloodVolume then return 0 end;
+
+    return math.floor((self.bloodVolume / self.maxBloodVolume) * 100);
+end
+
+function VitalSigns:getCurrentBloodVolumeMultiplier()
+    if not self.bloodVolume or not self.maxBloodVolume then return 0.0 end;
+
+    return math.floor((self.bloodVolume / self.maxBloodVolume));
+end
+
+
+--[[
+        Calculate current blood loss in ml based on all current injuries.
+        Where nil is returned, there was an error. A blood loss of 0 means the character is still alive but is not bleeding or not capable
+        of losing blood.
+--]] 
+
+function VitalSigns:calculateCurrentBloodLoss()
+    if not self.character then return nil end;
+
+    if not self.character:isAlive() then return nil end;
+    if self.character:isGodMod() then return 0 end; -- No point if they're invincible.
+
+    local bodyDamage = self.character:getBodyDamage();
+    if not bodyDamage then return nil end;
+
+    local totalBleedAmount = 0;
+
+    -- Iterate through each body part to get the blood loss amount.
+    for i = 0, bodyDamage:getBodyParts():size() - 1 do
+        local part = bodyDamage:getBodyParts():get(i);
+        if part and part:bleeding() then
+            -- Get the bleed level from mod data.
+            local partMod = part:getModData();
+            if partMod and partMod.IMO_Data then
+                totalBleedAmount = totalBleedAmount + (partMod.IMO_Data.bleedAmount or 0);
             end
         end
     end
 
-    self:save();
-end 
+    return totalBleedAmount;
+end
 
--- Calculate current blood loss in ml based on all current injuries.
-function VitalSigns:calculateCurrentBloodLoss()
-    if not self.character then return end;
+--[[
+    To be called from VitalSigns:update() or when an immediate calculation needs to be done for traumatic injuries.
+    Returns % of total blood volume lost.
+--]]
+function VitalSigns:updateBloodLoss(lossAmt)
+    if not lossAmt then return end;
 
-    if not self.character:isAlive() then return end;
-    if self.character:isGodMod() then return end; -- No point if they're invincible.
+    if lossAmt > 0 then
+        local prevBloodVolPercent = self:getCurrentBloodVolumePercentage();
 
-    local bodyDamage = self.character:getBodyDamage();
-    if not bodyDamage then return end;
-
-    -- Iterate through each body part to get the blood loss amount.
-    print("Your total bleed level is:");
-    print(tostring(self.character.bleedingLevel or "BLEEDING LEVEL NOT FOUND"));
-    for i = 0, bodyDamage:getBodyParts():size() - 1 do
-        local part = bodyDamage:getBodyParts():get(i);
-        if part then
-
+        self.bloodVolume = self.bloodVolume - lossAmt;
+        if self.bloodVolume <= 0 then
+            self.bloodVolume = 0;
         end
+
+        local newBloodVolPercent = self:getCurrentBloodVolumePercentage();
+
+        return math.floor(prevBloodVolPercent - newBloodVolPercent);
+    end
+end
+
+function VitalSigns:updateVitalsFromBloodVolume(totalPercentLost)
+    if not totalPercentLost then
+        error("[IMO] VitalSigns:updateVitalsFromBloodVolume called with totalPercentLost returned as nil.");
+        return;
     end
 
+    -- Source: https://www.ncbi.nlm.nih.gov/books/NBK470382/
+    -- Categories of blood loss:
+        -- Class 1 - 100-85%: heart rate minimally elevated, no change in other vitals.
+        -- Class 2 - 84%-70%: heart rate between 100 and 120, pulse pressure (systolic - diastolic) is between 25% and 30% of total, RR is 20-24.
+        -- Class 3 - 69%-60%: significant BP drop, HR > 120. RR 25-30.
+        -- Class 4 - 59% and lower: low blood pressure with PP < 25, BPM between 120 and 200.
+
+    if totalPercentLost < 15 then -- Stage 1
+
+    elseif totalPercentLost < 30 then -- Stage 2 
+
+    elseif totalPercentLost < 40 then -- Stage 3 
+
+    elseif totalPercentLost > 40 then -- Stage 4
+
+    elseif totalPercentLost > 55 then -- uh oh
+
+    end
 end
 
 function VitalSigns:update()
     -- Step 1 is to calculate total outgoing blood loss.
-    local losingBlood = self:calculateCurrentBloodLoss();
+    local bloodToLose = self:calculateCurrentBloodLoss();
+    local totalPercentLost = self:updateBloodLoss(bloodToLose);
 
+    if not totalPercentLost then
+        error("[IMO] VitalSigns:update called with totalPercentLost returned as nil.");
+        return;
+    end
+
+    VitalSigns:updateVitalsFromBloodVolume(totalPercentLost);
+    
     -- Then how any other injuries affect it.
+end
+
+--[[
+    This is different to VitalSigns:update() - update sets the DESIRED vitals. OnTick works towards it.
+    This simulates the heart pumping and the flow of blood round the body.
+
+    e.g. Current heart rate is 60, desired is 80, the gap is 20, so each tick will add 20%.
+    Current systolic BP is 100, desired is 105, the gap is 5. Each tick will add 5%.
+--]] 
+function VitalSigns:onTick()
+    -- Heart rate.
+
+
 end
 
 function VitalSigns:save()

@@ -1,0 +1,14 @@
+{
+    "Lua.diagnostics.disable": [
+        "duplicate-index",
+        "empty-block",
+        "unused-function",
+        "unknown-operator",
+        "duplicate-set-field",
+        "undefined-field",
+        "undefined-global",
+        "param-type-mismatch",
+        "deprecated",
+        "undefined-doc-name"
+    ]
+}
