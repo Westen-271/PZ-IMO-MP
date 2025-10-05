@@ -33,7 +33,7 @@ end
 ---<b>Sources:</b> https://www.ncbi.nlm.nih.gov/books/NBK526077/ and https://www.ncbi.nlm.nih.gov/books/NBK470382/.
 function BloodManager:calculateTotalBloodVolume()
 
-    if not self.isFemale or not self.weight or not self.fitnessLvl then
+    if self.isFemale == nil or not self.weight or not self.fitnessLvl then
         IMOLoggingUtils.logError("BloodManager - attempted to calculate total blood volume but one or more required args is nil.");
         IMOLoggingUtils.errorDumpParams({ isFemale = self.isFemale, weight = self.weight, fitnessLvl = self.fitnessLvl });
         return;

@@ -51,4 +51,5 @@ function MedicalSystem:initialiseSubsystems()
 
     self.bloodManager = BloodManager:new(self.character:isFemale(), characterWeight, fitnessLevel);
     self.bloodPressureManager = BloodPressureManager:new(characterWeight, fitnessLevel);
+    
 end
